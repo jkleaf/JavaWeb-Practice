@@ -10,9 +10,10 @@
 function checkEmpty(){
 		var userID=window.register.userID.value;
 		var username=window.register.username.value;
+		var createday=window.register.createday.value;
+		var major=window.register.major.value;
 		var psw=window.register.psw.value;
 		var repeatpsw=window.register.repeatpsw.value;
-		var major=window.register.major.value;
 		var birthday=window.register.birthday.value;
 		var tel=window.register.tel.value;
 		var email=window.register.email.value;
@@ -25,6 +26,11 @@ function checkEmpty(){
 	    	alert("用户名不能为空!");
 	    	document.register.username.focus(); 
 	        return false;
+	    }
+	    if(createday==""){
+	    	alert("入学日期不能为空!");
+	    	document.register.createday.focus();
+	    	return false;
 	    }
 	    if(major=="填写专业..."){
 	    	alert("专业不能为空!");
@@ -76,6 +82,7 @@ function checkEmpty(){
 		}
 		$("userID").onfocus=function fn(){
 			if($("userID").value=="填写用户ID..."){
+// 				$("userID").stlye.color="#9db3ec";
 				$("userID").value="";
 			}
 		}
@@ -146,7 +153,9 @@ function checkEmpty(){
 	<div class="signup">
      	<form action="showUserInfo.jsp" name="register" method="post" onsubmit="return checkEmpty();">
 			<input type="text" class="registertextfield" name="userID" value="填写用户ID..." id="userID"/> 
-	      	<input type="text" class="registertextfield" name="username" value="填写用户名..." id="username"/>
+	      	<input type="text" class="registertextfield" name="username" value="填写用户名..." id="username"/><br>
+	      	<div style="text-align:center;color:white; font-size:20px;">入学时间:
+	      	<input type="date" class="registertextfield" style="width:170px" name="createday"/></div>
 			<input type="text" class="registertextfield" name="major" value="填写专业..." id="major"/>
 			<input type="password" class="registertextfield" name="psw" id="psw" style="font-weight:bold;" placeholder="填写密码..."/>
 			<input type="password" class="registertextfield" name="repeatpsw" style="font-weight:bold;" 
