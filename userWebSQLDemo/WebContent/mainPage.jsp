@@ -12,7 +12,7 @@
       <div id="pop1" class="popDiv1 loginDiv">
         <h1>Login Here</h1>
 <!--         <form class="" id="login-submit" onsubmit="return checkLogin()"> -->
-		<form id="login-submit" method="post">
+		<form action="LoginController" id="login-submit" method="post">
          <div class="textbox">
             <input type="text" placeholder="用户名" name="name" id="loginName" value="" required="required">
           </div>
@@ -27,7 +27,7 @@
       </div>
       <div id="pop2" class="popDiv2 regDiv">
         <h1>Sign Up</h1>
-        <form class="" id="sign-submit" method="post"> 
+        <form action="RegisterController" id="sign-submit" method="post"> 
 <!--         onsubmit="return checkRegister()"> -->
           <div class="textbox">
             <input type="text" placeholder="用户Id" id="id" name="id" value="" required="required">

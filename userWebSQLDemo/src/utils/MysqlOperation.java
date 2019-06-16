@@ -56,7 +56,8 @@ public class MysqlOperation {
 			}
 			count = ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.err.println("SQL Exception");
 		} finally {
 			JDBCUtils.Closeall(ps, conn);
 		}

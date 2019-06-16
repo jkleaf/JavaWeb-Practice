@@ -1,6 +1,8 @@
 package web.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +33,7 @@ public class AddUserController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out=response.getWriter();
 		User user=new User();
 		String id=request.getParameter("id");
 		String name=request.getParameter("name");
@@ -45,7 +48,8 @@ public class AddUserController extends HttpServlet {
 		if(UserDao.insertUser(user)==1) {
 			response.sendRedirect("userManager.jsp");
 		}else {
-			
+			out.print("<script>alert('该用户已存在!无法添加!')</script>");
+			response.setHeader("refresh", "0.1;url=userManager.jsp");
 		}
 	}
 
