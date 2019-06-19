@@ -2,31 +2,34 @@ package web.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
-import javax.jws.soap.SOAPBinding.Use;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.User;
-import dao.UserDao;
+import bean.TreeImage;
+import dao.TreeImageDao;
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import service.UserService;
 import tool.JsonReader;
 
 /**
- * Servlet implementation class LoginController
+ * Servlet implementation class QueryTrees
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/QueryTrees")
+public class QueryTrees extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	private List<TreeImage> treeImages;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public QueryTrees() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,38 +38,39 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
-//		/** 设置响应头允许ajax跨域访问 **/
-//		response.setHeader("Access-Control-Allow-Origin", "*");
-//		/* 星号表示所有的异域请求都可以接受， */
-//		response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-		PrintWriter out =response.getWriter();
+		PrintWriter out=response.getWriter();
 		JSONObject json=JsonReader.receivePost2Json(request);
 		JSONObject jsonObject=new JSONObject();
-		User user=null;
+		JSONArray jsonArray=new JSONArray();
 		System.out.println(json);
-
-		User loginUser=(User) JSONObject.toBean(json, User.class);//
 		
-//		if(loginUser!=null) {
-		if(loginUser!=null)
-			user=UserDao.getUser(loginUser.getAccount());
+		String startDate=json.getString("startDate");
+		String endDate=json.getString("endDate");
 		
-		if(loginUser!=null&&user!=null&&UserDao.isLogin(user)){
-			jsonObject.put("user", JSONObject.fromObject(user));//object->json
-//			jsonObject.put("message", JSONObject.fromObject("用户登录成功!"));
-		}else{
-//			jsonObject.put("message", JSONObject.fromObject("用户登录失败!用户名或密码错误!"));
-			jsonObject.put("user", JSONObject.fromObject("{}"));
+		treeImages=TreeImageDao.getImages(startDate, endDate);
+		if(treeImages!=null) {
+			for (TreeImage treeImage : treeImages) {
+				JSONObject jsonObjectTmp=new JSONObject();
+				jsonObjectTmp.put("id", treeImage.getId());
+				jsonObjectTmp.put("name", treeImage.getName());
+				jsonObjectTmp.put("longitude", treeImage.getLongitude());
+				jsonObjectTmp.put("latitude", treeImage.getLatitude());
+				jsonObjectTmp.put("u_account", treeImage.getU_account());
+				jsonObjectTmp.put("record_date", treeImage.getRecord_date());
+				jsonArray.add(jsonObjectTmp);
+			}
+			jsonObject.put("treeImages", jsonArray.toString());
 		}
+		
 		System.out.println("jsonObject:"+jsonObject.toString());
-//		}
 		out.write(jsonObject.toString());
 		out.flush();
 		
 	}
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

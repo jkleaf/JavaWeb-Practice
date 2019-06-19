@@ -1,8 +1,12 @@
 package test;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
+import bean.TreeImage;
 import bean.User;
+import dao.TreeImageDao;
 import dao.UserDao;
 import jdbc.JDBCUtils;
 import jdbc.MysqlQuery;
@@ -26,8 +30,22 @@ public class JDBCTest {
 //		System.out.println(user.getEmail());
 //		System.out.println(user.getTelephone());
 		
-		SimpleDateFormat sdf=new SimpleDateFormat("HH:mm:ss");
-		System.out.println(sdf.format(1000));
+//		SimpleDateFormat sdf=new SimpleDateFormat("HH:mm:ss");
+//		System.out.println(sdf.format(1000));
+	
+//		String date="20190616224834";
+//		System.out.println(date);
+//		System.out.println(date.substring(0,4)+date.substring(5,7)+date.substring(8,10));
+		
+		List<TreeImage> treeImages=TreeImageDao.getImages("20190617", "20190618");
+		for (TreeImage treeImage : treeImages) {
+			System.out.println(treeImage.getId());
+			System.out.println(treeImage.getLongitude());
+			System.out.println(treeImage.getLatitude());
+			System.out.println(treeImage.getU_account());
+			System.out.println(treeImage.getRecord_date());
+		}
+	
 	}
 	
 }

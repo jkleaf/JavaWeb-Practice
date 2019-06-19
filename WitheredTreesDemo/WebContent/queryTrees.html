@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+	<form>
+      <!-- Id: <input type="text" id="id" name="" value=""><br>
+      Longitude: <input type="text" id="longtitude" name="" value=""><br>
+      Latitude: <input type="text" id="latitude" name="" value=""><br>
+      U_account: <input type="text" id="u_account" name="" value=""><br>
+      Record_Date: <input type="text" id="record_date" name="" value=""><br> -->
+			StartDate: <input type="text" id="startDate" name="" value=""><br>
+			EndDate: <input type="text" id="endDate" name="" value="">
+			<input type="button" id="query-btn" name="" value="Query">
+	</form>
+	<div id="msgDiv"></div>
+	<script>
+		$('#query-btn').click(function(){
+      // var id=document.getElementById('id').value;
+      // var longtitude=document.getElementById('longitude').value;
+			// var latitude=document.getElementById('latitude').value;
+			// var u_account=document.getElementById('u_account').value;
+			// var record_date=document.getElementById('record_date').value;
+			var startDate=document.getElementById('startDate').value;
+			var endDate=document.getElementById('endDate').value;
+			var dateJson={
+				startDate:startDate,
+				endDate:endDate
+			};
+			var url="QueryTrees";
+			$.post(url,JSON.stringify(dateJson), function(data){
+				console.log(data);
+				$('#msgDiv').html(data);
+				var json=JSON.parse(data);
+				// alert(json.message);
+			});
+		});
+	</script>
+</html>

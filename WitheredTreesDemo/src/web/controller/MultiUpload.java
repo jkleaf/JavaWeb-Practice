@@ -16,6 +16,12 @@ import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import bean.TreeImage;
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import tool.JsonReader;
+
 /**
  * Servlet implementation class MutilUpload
  */
@@ -24,6 +30,8 @@ public class MultiUpload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private String rootPath="D:\\apache-tomcat-9.0.13\\webapps\\ROOT\\WitheredTreesDemo\\upload\\";
+	
+	private List<TreeImage> treeImages;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,10 +48,13 @@ public class MultiUpload extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		ServletFileUpload sfupload=new ServletFileUpload(new DiskFileItemFactory());
+		
 		sfupload.setFileSizeMax(10*1024*1024);
+		sfupload.setSizeMax(50*1024*1024);
 //		sfupload.setSizeMax(1024*1024*1024);
 //		String rootPath=request.getServletContext().getRealPath("/upload/");
 		System.out.println("rootPath: "+rootPath);
+		System.out.println(request);
 		PrintWriter out=response.getWriter();
 		try {
 			Map<String, List<FileItem>> map = sfupload.parseParameterMap(request);
@@ -90,7 +101,8 @@ public class MultiUpload extends HttpServlet {
         if("".equals(filename) && fileSize == 0){             
             return;  
         }   
-        File uploadFile = new File(filePath + File.separator + filename);  
+        File uploadFile = new File(filePath + File.separator + filename);
+        //id u_account 
         item.write(uploadFile);
         out.write("上传文件"+filename+"成功!");
     }
