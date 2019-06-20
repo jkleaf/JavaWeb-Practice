@@ -10,6 +10,10 @@ public class ImageHandler {
 	
 	public static String GetLng(String path) throws IOException{
 	    File f = new File(path);
+	    if(!f.exists()) {
+	    	System.out.println("not exists");
+	    	return null;
+	    }
 	    BufferedImage image = ImageIO.read(f);
         String Lng;
         int p = image.getRGB(0, 0);
@@ -31,6 +35,10 @@ public class ImageHandler {
 	
 	public static String GetLat(String path) throws IOException{
 	    File f = new File(path);
+	    if(!f.exists()) {
+	    	System.out.println("not exists");
+	    	return null;
+	    }
 	    BufferedImage image = ImageIO.read(f);
         int height = image.getHeight();
         String Lat;
@@ -51,4 +59,8 @@ public class ImageHandler {
         return Lat;
     }
     
+	public static void main(String[] args) throws IOException {
+		System.out.println(Double.valueOf(GetLng("D:/apache-tomcat-9.0.13/webapps/ROOT/WitheredTreesDemo/upload/PNG_20190619_155509_treeImg.png")));
+		System.out.println(Double.valueOf(GetLat("D:/apache-tomcat-9.0.13/webapps/ROOT/WitheredTreesDemo/upload/PNG_20190619_155509_treeImg.png")));
+	}
 }

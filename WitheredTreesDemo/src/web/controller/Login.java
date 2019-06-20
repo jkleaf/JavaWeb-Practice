@@ -51,10 +51,11 @@ public class Login extends HttpServlet {
 		User loginUser=(User) JSONObject.toBean(json, User.class);//
 		
 //		if(loginUser!=null) {
-		if(loginUser!=null)
-			user=UserDao.getUser(loginUser.getAccount());
+//		if(loginUser!=null)
+//			user=UserDao.getUser(loginUser.getAccount());
 		
-		if(loginUser!=null&&user!=null&&UserDao.isLogin(user)){
+		if(loginUser!=null&&UserDao.isLogin(loginUser)){
+			user=UserDao.getUser(loginUser.getAccount());
 			jsonObject.put("user", JSONObject.fromObject(user));//object->json
 //			jsonObject.put("message", JSONObject.fromObject("用户登录成功!"));
 		}else{

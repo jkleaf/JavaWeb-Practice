@@ -1,6 +1,8 @@
 package web.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,19 +45,21 @@ public class AddTreeImages extends HttpServlet {
 
 		JSONObject json = JsonReader.receivePost2Json(request);
 		System.out.println(json);
-		JSONObject jsonObject = new JSONObject();//
+//		JSONObject jsonObject = new JSONObject();//
 		JSONArray jsonArray = json.getJSONArray("treeImages");
 
 		for (int i = 0; i < jsonArray.size(); i++) {
 			JSONObject jsonObjectTmp = jsonArray.getJSONObject(i);
 			String id = jsonObjectTmp.getString("id");
 			String name = jsonObjectTmp.getString("name");
-			String imgFilePath = rootPath + name;
+//			String imgFilePath = rootPath + name;
 			// longitude
-			Double longitude = Double.valueOf(ImageHandler.GetLng(imgFilePath));
+//			Double longitude = Double.valueOf(ImageHandler.GetLng(imgFilePath));
 			// latitude
-			Double latitude = Double.valueOf(ImageHandler.GetLat(imgFilePath));
-			System.out.println("read:"+imgFilePath);
+//			Double latitude = Double.valueOf(ImageHandler.GetLat(imgFilePath));
+			Double longitude=jsonObjectTmp.getDouble("longitude");
+			Double latitude=jsonObjectTmp.getDouble("latitude");
+//			System.out.println("read:"+name);
 			String u_account = jsonObjectTmp.getString("u_account");
 			String record_date = jsonObjectTmp.getString("record_date");
 			TreeImage treeImage = new TreeImage(id, name, longitude, latitude, u_account, record_date);

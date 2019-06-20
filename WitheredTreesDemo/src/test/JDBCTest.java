@@ -16,10 +16,10 @@ public class JDBCTest {
 	public static void main(String[] args) {
 //		System.out.println(JDBCUtils.getConnection());
 		
-//		User user=new User();
-//		user.setAccount("51513");
-//		user.setPassword("56sdv4");
-//		System.out.println(UserDao.isLogin(user));
+		User user=new User();
+		user.setAccount("666");
+		user.setPassword("56sdv4");
+		System.out.println(UserDao.isLogin(user));
 		
 //		String account="51513";
 //		User user=MysqlQuery.queryUser(account);
@@ -37,15 +37,15 @@ public class JDBCTest {
 //		System.out.println(date);
 //		System.out.println(date.substring(0,4)+date.substring(5,7)+date.substring(8,10));
 		
-		List<TreeImage> treeImages=TreeImageDao.getImages("20190617", "20190618");
-		for (TreeImage treeImage : treeImages) {
-			System.out.println(treeImage.getId());
-			System.out.println(treeImage.getLongitude());
-			System.out.println(treeImage.getLatitude());
-			System.out.println(treeImage.getU_account());
-			System.out.println(treeImage.getRecord_date());
-		}
-	
+//		List<TreeImage> treeImages=TreeImageDao.getImages("20190617", "20190618");
+//		for (TreeImage treeImage : treeImages) {
+//			System.out.println(treeImage.getId());
+//			System.out.println(treeImage.getLongitude());
+//			System.out.println(treeImage.getLatitude());
+//			System.out.println(treeImage.getU_account());
+//			System.out.println(treeImage.getRecord_date());
+//		}
+//	
 	}
 	
 }

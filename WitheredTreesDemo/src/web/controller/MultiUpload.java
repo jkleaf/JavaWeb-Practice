@@ -53,7 +53,7 @@ public class MultiUpload extends HttpServlet {
 		sfupload.setSizeMax(50*1024*1024);
 //		sfupload.setSizeMax(1024*1024*1024);
 //		String rootPath=request.getServletContext().getRealPath("/upload/");
-		System.out.println("rootPath: "+rootPath);
+//		System.out.println("rootPath: "+rootPath);
 		System.out.println(request);
 		PrintWriter out=response.getWriter();
 		try {
@@ -105,6 +105,7 @@ public class MultiUpload extends HttpServlet {
         //id u_account 
         item.write(uploadFile);
         out.write("上传文件"+filename+"成功!");
+        out.flush();
     }
 	
 }
