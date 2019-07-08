@@ -3,8 +3,11 @@ package web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import bean.TreeImage;
 import net.sf.json.JSON;
@@ -29,7 +34,11 @@ import tool.JsonReader;
 public class MultiUpload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private String rootPath="D:\\apache-tomcat-9.0.13\\webapps\\ROOT\\WitheredTreesDemo\\upload\\";
+	private String rootPath;
+//	private String rootPath="D:\\apache-tomcat-9.0.13\\webapps\\ROOT\\WitheredTreesDemo\\upload\\";
+//	private String rootPath="/upload/";
+//	private String rootPath="/var/lib/tomcat/webapps/WitheredTreesDemo/upload/";
+	private Properties prop;
 	
 	private List<TreeImage> treeImages;
     /**
@@ -37,7 +46,13 @@ public class MultiUpload extends HttpServlet {
      */
     public MultiUpload() {
         super();
-        // TODO Auto-generated constructor stub
+        prop=new Properties();
+        try {
+			prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("web/controller/config.properties"));
+			rootPath=prop.getProperty("rootPath");
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
 	/**
@@ -55,6 +70,8 @@ public class MultiUpload extends HttpServlet {
 //		String rootPath=request.getServletContext().getRealPath("/upload/");
 //		System.out.println("rootPath: "+rootPath);
 		System.out.println(request);
+		System.out.println(request.getRemoteAddr());
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		PrintWriter out=response.getWriter();
 		try {
 			Map<String, List<FileItem>> map = sfupload.parseParameterMap(request);
@@ -95,14 +112,16 @@ public class MultiUpload extends HttpServlet {
         System.out.println("be invoked");
 		String filename = item.getName();         
         System.out.println("filename: " + filename);  
-        int index = filename.lastIndexOf("\\");  
+        int index = filename.lastIndexOf(File.separator);//\\  
         filename = filename.substring(index + 1, filename.length());  
         long fileSize = item.getSize();  
-        if("".equals(filename) && fileSize == 0){             
-            return;  
+        if("".equals(filename) && fileSize == 0){
+        	out.write("文件"+filename+"为空!");
+        	return;  
         }   
         File uploadFile = new File(filePath + File.separator + filename);
         //id u_account 
+//        uploadFile.setWritable(true, false);//linux java设置可写权限
         item.write(uploadFile);
         out.write("上传文件"+filename+"成功!");
         out.flush();

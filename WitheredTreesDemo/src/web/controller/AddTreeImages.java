@@ -23,8 +23,8 @@ import tool.JsonReader;
 public class AddTreeImages extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private String rootPath = "D:/apache-tomcat-9.0.13/webapps/ROOT/WitheredTreesDemo/upload/";
-
+//	private String rootPath = "D:/apache-tomcat-9.0.13/webapps/ROOT/WitheredTreesDemo/upload/";
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
